@@ -27,7 +27,7 @@ for row in reader:
 
     # Random ID for the message text
     random_id = str(random.randint(100000, 999999))
-
+    row["messageId"] = random_id
     # Build payload as dict
     payload_dict = {
         "messages": [
@@ -57,8 +57,6 @@ for row in reader:
 
         if "messages" in resp_data:
             message_info = resp_data["messages"][0]
-            # Store Infobip messageId
-            row["messageId"] = message_info.get("messageId", "No ID")
             # Store status description
             row["description"] = message_info.get("status", {}).get("description", "No description")
         else:
@@ -76,4 +74,4 @@ with open(CSV_FILE, "w", newline="", encoding="utf-8") as csvfile:
     writer.writeheader()
     writer.writerows(reader)
 
-print("All messages processed and CSV updated in place using http.client.")
+
